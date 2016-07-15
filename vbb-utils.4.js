@@ -159,7 +159,7 @@ for (i = 0; i < a.length; i++) {
 	s = getNaturalHW(q);
 	if (s.width === 0 && s.height === 0) {
 		// image probably isn't loaded yet
-		fixAddEvent(q).addEventListener("loaded", function(e) {
+		fixAddEvent(q).addEventListener("load", function(e) {
 			processImage(getTarget(e), null);
 		});
 	} else {
