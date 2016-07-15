@@ -137,13 +137,13 @@ addClick(m, function origSizeClick(el) {
 });
 }
 
-function processImage(p, s) {
-if (s === null) { s = getNaturalHW(p); }
+function processImage(p, q) {
+var s = q === null ? getNaturalHW(p) : q;
 if (s.width <= p.clientWidth) { return; }
-d = document.createElement("div");
+var d = document.createElement("div");
 d.className = "bigimgwrap";
 d.appendChild(p.parentNode.replaceChild(d, p));
-n = document.createElement("div");
+var n = document.createElement("div");
 setText(n, "+");
 n.className = "showrealsize";
 n.title = strFormat(sShowBigger, s.width, s.height);
@@ -153,7 +153,7 @@ addClick(n, imgClick);
 
 function injectImagesRealSize() {
 var a = document.querySelectorAll(".content img"),
-	d, i, n, q, s;
+	i, q, s;
 for (i = 0; i < a.length; i++) {
 	q = a[i];
 	s = getNaturalHW(q);
