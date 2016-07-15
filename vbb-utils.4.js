@@ -151,20 +151,22 @@ d.appendChild(n);
 addClick(n, imgClick);
 }
 
+function imgLoad(e) {
+processImage(getTarget(e), null);
+}
+
 function injectImagesRealSize() {
 var a = document.querySelectorAll(".content img"),
 	i, q, s;
 for (i = 0; i < a.length; i++) {
 	q = a[i];
 	s = getNaturalHW(q);
-	if (s.width === 0 && s.height === 0) {
-		// image probably isn't loaded yet
-		fixAddEvent(q).addEventListener("load", function(e) {
-			processImage(getTarget(e), null);
-		});
-	} else {
-		processImage(q, s);
-	}
+	// image probably isn't loaded yet
+	// jshint ignore:start
+	(s.width === 0 && s.height === 0)
+		? fixAddEvent(q).addEventListener("load", imgLoad)
+		: processImage(q, s);
+	// jshint ignore:end
 }
 }
 
