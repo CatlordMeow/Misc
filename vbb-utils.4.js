@@ -1,4 +1,4 @@
-﻿// @name vbb-utils
+// @name vbb-utils
 // @version 1.2
 // eslint-disable-next-line
 // @description Helper script for vBulletin 4.2 forums. Bells and whistlers.
@@ -119,7 +119,7 @@ return t;
 
 // ========================================
 
-function picClick(e) {
+function imgClick(e) {
 var m = getTarget(e).parentNode.firstChild,
 	r = getOffsetRect(m),
 	t = r.top,
@@ -137,22 +137,34 @@ addClick(m, function origSizeClick(el) {
 });
 }
 
-function injectPictureRealSize() {
+function processImage(p, s) {
+if (s === null) { s = getNaturalHW(p); }
+if (s.width <= p.clientWidth) { return; }
+d = document.createElement("div");
+d.className = "bigimgwrap";
+d.appendChild(p.parentNode.replaceChild(d, p));
+n = document.createElement("div");
+setText(n, "+");
+n.className = "showrealsize";
+n.title = strFormat(sShowBigger, s.width, s.height);
+d.appendChild(n);
+addClick(n, imgClick);
+}
+
+function injectImagesRealSize() {
 var a = document.querySelectorAll(".content img"),
 	d, i, n, q, s;
 for (i = 0; i < a.length; i++) {
 	q = a[i];
 	s = getNaturalHW(q);
-	if (s.width <= q.clientWidth) { continue; }
-	d = document.createElement("div");
-	d.className = "bigimgwrap";
-	d.appendChild(q.parentNode.replaceChild(d, q));
-	n = document.createElement("div");
-	setText(n, "+");
-	n.className = "showrealsize";
-	n.title = strFormat(sShowBigger, s.width, s.height);
-	d.appendChild(n);
-	addClick(n, picClick);
+	if (s.width === 0 && s.height === 0) {
+		// image probably isn't loaded yet
+		fixAddEvent(q).addEventListener("loaded", function(e) {
+			processImage(getTarget(e), null);
+		});
+	} else {
+		processImage(q, s);
+	}
 }
 }
 
@@ -186,7 +198,7 @@ for (i = 0; i < a.length; i++) {
 
 function main() {
 injectQuoteExpand();
-injectPictureRealSize();
+injectImagesRealSize();
 }
 
 main();
