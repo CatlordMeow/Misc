@@ -192,5 +192,3 @@ injectPictureRealSize();
 main();
 
 }());
-= 120) { continue; }
-	m.className += 
