@@ -154,11 +154,6 @@ for (i = 0; i < a.length; i++) {
 	d.appendChild(n);
 	addClick(n, picClick);
 }
-d = document.createElement("link");
-d.rel = "stylesheet";
-d.type = "text/css";
-d.href = "http://fu.com/vbb quote.css";
-document.head.appendChild(d);
 }
 
 // ============================================
