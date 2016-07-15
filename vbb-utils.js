@@ -26,7 +26,7 @@ if (def(elem.innerText)) { elem.innerText = text; }
 
 function getNaturalHW(elem) {
 if (def(elem.naturalWidth)) {
-	return { width: elem.naturalWidth, height: elem.naturalheight };
+	return { width: elem.naturalWidth, height: elem.naturalHeight };
 }
 var img = new Image();
 img.src = elem.src;
