@@ -117,6 +117,12 @@ for (i = 1; i < arguments.length; i++) {
 return t;
 }
 
+function preventDefault(e) {
+e.preventDefault
+ ? e.preventDefault()
+ : event.returnValue = false;
+}
+
 // ========================================
 
 function imgClick(e) {
@@ -135,6 +141,7 @@ addClick(m, function origSizeClick(el) {
 	var pi = getTarget(el);
 	pi.parentNode.removeChild(pi);
 });
+preventDefault(e);
 }
 
 function processImage(p, q) {
