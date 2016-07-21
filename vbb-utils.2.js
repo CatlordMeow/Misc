@@ -5,7 +5,8 @@
 // @author Catlord Meow!, http://sovserv.su/member.php?u=237
 // @license GNU GPL v3; http://www.gnu.org/copyleft/gpl.html
 
-(function vbb_utils() {
+// eslint-disable-next-line no-unused-vars
+window.vbbMeow = (function vbbUtilsClosure() {
 
 "use strict";
 
@@ -118,9 +119,11 @@ return t;
 }
 
 function preventDefault(e) {
+// jshint ignore:start
 e.preventDefault
  ? e.preventDefault()
  : event.returnValue = false;
+// jshint ignore:end
 }
 
 // ========================================
@@ -212,11 +215,14 @@ injectImagesRealSize();
 
 main();
 
-spoilerClick = function (e) {
-var t = getTarget(e),
-	x = t.parentNode.parentNode.getElementsByTagName("div")[1].
+return {
+
+spoilerClick: function spoilerClick(elem) {
+var x = elem.parentNode.parentNode.getElementsByTagName("div")[1].
 		getElementsByTagName("div")[0].style;
-x.display = x.display === "" ? "none"	:	""; 
+x.display = x.display === "" ? "none"	:	"";
 }
+
+};
 
 }());
