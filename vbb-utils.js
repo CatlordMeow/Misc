@@ -5,7 +5,7 @@
 // @author Catlord Meow!, http://sovserv.su/member.php?u=237
 // @license GNU GPL v3; http://www.gnu.org/copyleft/gpl.html
 
-(function closure() {
+(function vbb_utils() {
 
 "use strict";
 
@@ -196,10 +196,10 @@ var a = document.getElementsByClassName("message"),
 for (i = 0; i < a.length; i++) {
 	m = a[i];
 	if (m.scrollHeight <= 120) { continue; }
-	m.className += " messageCut";
+	m.className += " messagecut";
 	e = document.createElement("div");
 	setText(e, sClickToExpand);
-	e.className = "quoteExpand";
+	e.className = "quoteexpand";
 	m.parentNode.appendChild(e);
 	addClick(e, quoteCutClick);
 }
@@ -211,5 +211,12 @@ injectImagesRealSize();
 }
 
 main();
+
+spoilerClick = function (e) {
+var t = getTarget(e),
+	x = t.parentNode.parentNode.getElementsByTagName("div")[1].
+		getElementsByTagName("div")[0].style;
+x.display = x.display === "" ? "none"	:	""; 
+}
 
 }());
