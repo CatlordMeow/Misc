@@ -5,8 +5,7 @@
 // @author Catlord Meow!, http://sovserv.su/member.php?u=237
 // @license GNU GPL v3; http://www.gnu.org/copyleft/gpl.html
 
-// eslint-disable-next-line no-unused-vars
-window.vbbMeow = (function vbbUtilsClosure() {
+(function vbbUtilsClosure() {
 
 "use strict";
 
@@ -214,15 +213,5 @@ injectImagesRealSize();
 }
 
 main();
-
-return {
-
-spoilerClick: function spoilerClick(elem) {
-var x = elem.parentNode.parentNode.getElementsByTagName("div")[1].
-		getElementsByTagName("div")[0].style;
-x.display = x.display === "" ? "none"	:	"";
-}
-
-};
 
 }());
