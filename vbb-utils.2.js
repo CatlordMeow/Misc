@@ -1,5 +1,6 @@
-// @name vbb-utils
-// @version 1.3
+﻿// @name vbb-utils
+// @version 1.4
+// @date 22.07.16
 // eslint-disable-next-line
 // @description Helper script for vBulletin 4.2 forums. Bells and whistlers.
 // @author Catlord Meow!, http://sovserv.su/member.php?u=237
