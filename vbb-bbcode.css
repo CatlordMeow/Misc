@@ -7,14 +7,18 @@
 }
 
 .spoilerbtn {
-	background-color: #003366;
+	background: linear-gradient(to bottom, #817ecc 0%,#003366 100%);
 	border: 2px;
-	border-radius: 3px 3px 3px 3px;
+	border-radius: 7px 7px 7px 7px;
 	color: #FFFFFF;
 	font-size: 15px;
 	margin: 0;
 	padding: 1px 9px;
 	text-shadow: none;
+}
+
+.spoilerbtn:hover {
+	background: linear-gradient(to bottom, #d1dffc 0%,#332add 100%);
 }
 
 .spoilercntwrap {
