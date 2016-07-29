@@ -1,23 +1,24 @@
 ﻿// @name vbb-utils
-// @version 1.4
-// @date 22.07.16
+// @version 1.5
+// @date 29.07.16
 // eslint-disable-next-line
 // @description Helper script for vBulletin 4.2 forums. Bells and whistlers.
 // @author Catlord Meow!, http://sovserv.su/member.php?u=237
-// @license GNU GPL v3; http://www.gnu.org/copyleft/gpl.html
+// @license GNU GPL v3, http://www.gnu.org/copyleft/gpl.html
 
 (function vbbUtilsClosure() {
 
-"use strict";
+'use strict';
 
 var
-  sClickToExpand = "Кликните, чтобы развернуть",
-	sShowBigger = "Показать в полном размере (%s x %s)",
-	sShowSmaller = "Показано в полном размере.\n" +
-		"Кликните, чтобы уменьшить до нормального размера";
+	sClickToExpand = 'Кликните, чтобы развернуть',
+	sShowBigger = 'Изображение уменьшено\n' +
+		'Кликните, чтобы показать в полном размере (%s x %s)',
+	sShowSmaller = 'Изображение показано в полном размере.\n' +
+		'Кликните, чтобы уменьшить до нормального размера';
 
 function def(v) {
-return typeof v !== "undefined";
+return typeof v !== 'undefined';
 }
 
 function setText(elem, text) {
@@ -37,7 +38,7 @@ return { width: img.width, height: img.height };
 function fixAddEvent(o) {
 if (o && !o.addEventListener) {
 	o.addEventListener = function addEventListenerFix(e, f) {
-		this.attachEvent("on" + e, f);
+		this.attachEvent('on' + e, f);
 	};
 }
 return o;
@@ -49,8 +50,8 @@ return document.getElementById(elid);
 
 function addClick(e, f) {
 var m = e;
-if (typeof m === "string") { m = $(e); }
-fixAddEvent(m).addEventListener("click", f);
+if (typeof m === 'string') { m = $(e); }
+fixAddEvent(m).addEventListener('click', f);
 }
 
 // Add a getElementsByClassName function if the browser doesn't have one
@@ -64,11 +65,13 @@ document.getElementsByClassName = function getElemsClassNameFix(search) {
 		elements, i, pattern,
 		results = [];
 	if (d.querySelectorAll) { // IE8
-		return d.querySelectorAll("." + search);
+		return d.querySelectorAll('.' + search);
 	}
 	if (d.evaluate) { // IE6, IE7
+		/* eslint-disable quotes */
 		pattern = ".//*[contains(concat(' ', @class, ' '), ' " +
 			search + " ')]";
+		/* eslint-enable quotes */
 		elements = d.evaluate(pattern, d, null, 0, null);
 		// eslint-disable-next-line no-constant-condition
 		while (true) {
@@ -77,8 +80,8 @@ document.getElementsByClassName = function getElemsClassNameFix(search) {
 			results.push(i);
 		}
 	} else {
-		elements = d.getElementsByTagName("*");
-		pattern = new RegExp("(^|\\s)" + search + "(\\s|$)");
+		elements = d.getElementsByTagName('*');
+		pattern = new RegExp('(^|\\s)' + search + '(\\s|$)');
 		for (i = 0; i < elements.length; i++) {
 			if (pattern.test(elements[i].className)) {
 				results.push(elements[i]);
@@ -134,10 +137,10 @@ var m = getTarget(e).parentNode.firstChild,
 	t = r.top,
 	x = r.left;
 m = m.cloneNode();
-m.className = "realsizeimg";
+m.className = 'realsizeimg';
 var s = m.style;
-s.left = x + "px";
-s.top = t + "px";
+s.left = x + 'px';
+s.top = t + 'px';
 m.title = sShowSmaller;
 document.body.appendChild(m);
 addClick(m, function origSizeClick(el) {
@@ -150,12 +153,12 @@ preventDefault(e);
 function processImage(p, q) {
 var s = q === null ? getNaturalHW(p) : q;
 if (s.width <= p.clientWidth) { return; }
-var d = document.createElement("div");
-d.className = "bigimgwrap";
+var d = document.createElement('div');
+d.className = 'bigimgwrap';
 d.appendChild(p.parentNode.replaceChild(d, p));
-var n = document.createElement("div");
-setText(n, "+");
-n.className = "showrealsize";
+var n = document.createElement('div');
+setText(n, '+');
+n.className = 'showrealsize';
 n.title = strFormat(sShowBigger, s.width, s.height);
 d.appendChild(n);
 addClick(n, imgClick);
@@ -166,7 +169,7 @@ processImage(getTarget(e), null);
 }
 
 function injectImagesRealSize() {
-var a = document.querySelectorAll(".content img"),
+var a = document.querySelectorAll('.content img'),
 	i, q, s;
 for (i = 0; i < a.length; i++) {
 	q = a[i];
@@ -174,7 +177,7 @@ for (i = 0; i < a.length; i++) {
 	// image probably isn't loaded yet
 	// jshint ignore:start
 	(s.width === 0 && s.height === 0)
-		? fixAddEvent(q).addEventListener("load", imgLoad)
+		? fixAddEvent(q).addEventListener('load', imgLoad)
 		: processImage(q, s);
 	// jshint ignore:end
 }
@@ -189,20 +192,20 @@ while (x && x.nodeType !== 1) {
 	x = x.previousSibling;
 }
 if (!x) { return; }
-x.className = "message";
+x.className = 'message';
 t.parentNode.removeChild(t);
 }
 
 function injectQuoteExpand() {
-var a = document.getElementsByClassName("message"),
+var a = document.getElementsByClassName('message'),
 	e, i, m;
 for (i = 0; i < a.length; i++) {
 	m = a[i];
 	if (m.scrollHeight <= 120) { continue; }
-	m.className += " messagecut";
-	e = document.createElement("div");
+	m.className += ' messagecut';
+	e = document.createElement('div');
 	setText(e, sClickToExpand);
-	e.className = "quoteexpand";
+	e.className = 'quoteexpand';
 	m.parentNode.appendChild(e);
 	addClick(e, quoteCutClick);
 }
