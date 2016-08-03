@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<product productid="meowlinks" active="1">
+	<title>Meow! Links</title>
+	<description>Catlord Meow!'s URL tools. Replace URL title with page title, auto detect pictures, auto detect videos.</description>
+	<version>1.0</version>
+	<url>http://sovserv.su/member.php?u=237</url>
+	<versioncheckurl />
+	<dependencies>
+		<dependency dependencytype="vbulletin" minversion="3.6.0" maxversion="4.9.9" />
+	</dependencies>
+	<codes>
+	</codes>
+	<templates>
+	</templates>
+	<stylevardfns>
+	</stylevardfns>
+	<stylevars>
+	</stylevars>
+	<plugins>
+		<plugin active="1" executionorder="5">
+			<title>Meow! Links</title>
+			<hookname>url_to_bbcode</hookname>
+			<phpcode><![CDATA[ 
+			
+/**
+ * This is "Meow! Links", product for vBulletin.
+ *
+ *            Credits:
+ * Catlord Meow!, exportforce, Jafo232, kerk, vBulletin team.
+ *
+ * Author: Catlord Meow!, http://sovserv.su/member.php?u=237
+ *
+ * Author of "Title Tag Fetcher" 1.5c: exportforce,
+ * http://www.vbulletin.org/forum/member.php?u=206080
+ * http://www.vbulletin.org/forum/showthread.php?t=189658
+ *
+ * Author of "Replace URL's With Page Title" 1.1: Jafo232,
+ * http://www.vbulletin.org/forum/member.php?u=54825
+ * http://www.vbulletin.org/forum/showthread.php?t=155909
+ *
+ * Author of patch for encoding detection: kerk, 
+ * http://vbsupport.org/forum/member.php?u=30
+ * http://vbsupport.org/forum/showthread.php?t=50335
+ *
+ * Changelog:
+ *
+ * 1.0 2016-07-30
+ * First public release
+ *
+ * PHP version 5
+ *
+ * @category vBulletin
+ * @package  Meow!_Links
+ * @author   Catlord Meow! <no@grumpy.cat>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU GPL v3
+ * @version  1.0
+ * @date     2016-08-03
+ * @link     https://github.com/CatlordMeow/Misc
+ */
+			
+if (!function_exists('convert_url_to_bbcode_callback_auto_title')) {
+	function convert_url_to_bbcode_callback_auto_title($messagetext, $prepend) {
+		// the auto parser - adds [url] tags around neccessary things
+		$messagetext = str_replace('\"', '"', $messagetext);
+		$prepend     = str_replace('\"', '"', $prepend);
+		
+		static $urlSearchArray, $emailSearchArray, $emailReplaceArray;
+		if (empty($urlSearchArray)) {
+			$taglist = '\[b|\[i|\[u|\[left|\[center|\[right|\[indent|\[quote|\[' .
+				'highlight|\[\*|\[/b|\[/i|\[/u|\[/left|\[/center|\[/right|\[/' .
+				'indent|\[/quote|\[/highlight';
+			$urlSearchArray = array(
+				'#(^|(?<=[^_a-z0-9-=\]"\'/@]|(?<=' . $taglist . 
+				')\]))((https?|ftp|gopher|news|telnet)://|www\.)((\[(?!/)|[^\s[^$`"' .
+				'\'|{}<>])+)(?!\[/url|\[/img)(?=[,.!)]*(\)\s|\)$|[\s[]|$))#siU'
+			);
+			$emailSearchArray  = array(
+				'/([ \n\r\t])([_a-z0-9-]+(\.[_a-z0-9-]+)*@[^\s]+(\.[a-z0-9-]+)*(\.' .
+				'[a-z]{2,4}))/si/^([_a-z0-9-]+(\.[_a-z0-9-]+)*@[^\s]+(\.[a-z0-9-]' .
+				'+)*(\.[a-z]{2,4}))/si'
+			);
+			$emailReplaceArray = array(
+				'\\1[email]\\2[/email]',
+				'[email]\\0[/email]'
+			);		
+		}
+		
+		$text = preg_replace_callback($urlSearchArray, 'auto_title', $messagetext);
+		
+		if (strpos($text, '@')) {
+			$text = preg_replace($emailSearchArray, $emailReplaceArray, $text);
+		}
+		return $prepend . $text;
+	}
+	
+	function auto_title2($text) {
+		global $vbulletin;
+				
+		if (!$vbulletin->options['meow_ref_replace']) { return null; }
+
+		$options = array(
+			'http' => array(
+				'user_agent' => 'vBulletin via PHP',
+				'max_redirects' => 10,
+				'timeout' => 20
+			)
+		);
+		$context = stream_context_create($options);
+		
+		if (strtolower($text[2]) == 'www.') {
+			$text[4] = $text[2] . $text[4];
+			$text[2] = 'http://';
+		}
+		$page = '';
+		$r = $vbulletin->options['meow_ref_buffers'];
+		$x = 0;
+		if ($fp = fopen($text[2] . $text[4], 'r', false, $context)) {
+			while (!feof($fp) AND ($x < $r)) {
+				$page .= fread($fp, 8192);
+				$x++;
+			}
+			@fclose($fp);
+		}
+		if ($page == '' or !preg_match('#<title>(.*)</title>#is', $page, $matches)
+			or !$matches[1]) {
+			return null;
+		}
+		// vB 3.x
+		//global $stylevar;
+		//$charset = $stylevar['charset'];
+		// vB 4.x
+		$charset = $vbulletin->options['meow_ref_encoding'];
+		if ($charset == '') {
+			if (class_exists('vB_Template_Runtime')) {
+				$charset = vB_Template_Runtime::fetchStyleVar('charset');
+			} else {
+				global $stylevar;
+				$charset = $stylevar['charset'];
+			}	
+		}
+		if ($charset == '') {
+			$er = 'Cannot detect encoding, falling back to utf-8' . PHP_EOL;
+			print $er;
+			trigger_error($er, E_USER_WARNING);
+			$charset = 'utf-8';
+		}
+				
+		$title = preg_replace("#[\r\n\t]#i", '', $matches[1]);
+		if (preg_match('#charset="?([-a-z0-9_]+)#i', $page, $matches2) 
+			AND $matches2[1]) {
+			$local_chset  = strtolower($charset);
+			$remote_chset = strtolower($matches2[1]);
+			if ($local_chset != $remote_chset) {
+				$title = iconv($remote_chset, $local_chset, $title);
+			}
+		}
+		return trim(html_entity_decode($title));
+	}
+
+	function auto_title($text) {
+		global $vbulletin;
+		$t = $text[0];
+		
+		if ($vbulletin->options['meow_pic_detect']) {
+			$x = strrchr($t, '.');
+			if ($x !== false and $x !== '.') {
+				$x = substr($x, 1);
+				$pics = explode(' ', strtolower($vbulletin->options['meow_pic_exts']));
+				for ($j = count($pics) - 1; $j >= 0; $j--) {
+					$s = $pics[$j];
+					if ($s === '.') { 
+						unset($pics[$j]);
+						// print 'dot is extension\r\n' . PHP_EOL;
+						continue;
+					}
+					if ($s[0] === '.') {
+						// print 'dot is first char of extension\r\n' . PHP_EOL;
+						$pics[$j] = substr($s, 1);
+					}
+				}
+				if (in_array(strtolower($x), $pics, true)) {
+					return "[img]{$t}[/img]";	
+				}
+			}
+		}
+	
+		if ($vbulletin->options['meow_vid_detect']) {
+			$youTubeTest = '#((http[s]?)?://(www)?\.youtube\.com/watch\?.*v=.+|' .
+				'(http[s]?)?://youtu\.be/.+)#i';
+			if (preg_match($youTubeTest, $t)) {
+			  $v = $vbulletin->options['meow_vid_code'];
+				return "[$v]{$t}[/$v]";			
+			}
+		}
+		
+		$x = auto_title2($text);
+		if ($x == '') {
+			$x = $t;
+		}
+		return "[url=$t]{$x}[/url]";
+	}
+
+	$messagetext = preg_replace_callback(
+		"#(^|\[/($skiptaglist)\])(.*(\[($skiptaglist)\]|$))#siU", 
+		function ($matches) {
+			return convert_url_to_bbcode_callback_auto_title($matches[3],
+				$matches[1]);
+		},
+		$messagetext
+	);
+}
+	
+]]></phpcode>
+		</plugin>
+	</plugins>
+	<phrases>
+		<phrasetype name="vBulletin Settings" fieldname="vbsettings">
+			<phrase name="settinggroup_meow_settings" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[Catlord Meow!'s Links]]></phrase>
+			<phrase name="setting_meow_ref_replace_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[Replace url titles with titles of referenced pages]]></phrase>
+			<phrase name="setting_meow_ref_replace_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[If this option is on, each time a user posted a url without any BB codes, forum will download page by the link and rewrite url title with page title, if any.]]></phrase>
+			<phrase name="setting_meow_ref_encoding_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[Override forum's encoding]]></phrase>
+			<phrase name="setting_meow_ref_encoding_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[Enter encoding to override vB_Template_Runtime::fetchStyleVar('charset').<br />
+				Leave blank to use result of fetchStyleVar.]]></phrase>
+			<phrase name="setting_meow_ref_buffers_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[Maximum number of buffers]]></phrase>			
+			<phrase name="setting_meow_ref_buffers_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[Maximum number of buffers, each size of 8192 bytes, to use to retrieve page's title.<br />
+			Value that is too low will break process of replacing.<br />
+			Value that is too high will lead to excessive traffic wasting and slows down your server.]]></phrase>		
+			<phrase name="setting_meow_pic_detect_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[Replace codes for images]]></phrase>
+			<phrase name="setting_meow_pic_detect_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[If this option is on, all newly posted urls having image extension will be wraped in img code.]]></phrase>
+			<phrase name="setting_meow_pic_exts_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[Extensions of images]]></phrase>
+			<phrase name="setting_meow_pic_exts_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[Enter space-delimeted list of extensions of images.]]></phrase>
+			<phrase name="setting_meow_vid_detect_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[Replace codes for YouTube]]></phrase>
+			<phrase name="setting_meow_vid_detect_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[If this option is on, all newly posted urls to YouTube videos will be wraped in code specified below.]]></phrase>
+			<phrase name="setting_meow_vid_code_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[Video code]]></phrase>
+			<phrase name="setting_meow_vid_code_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+				<![CDATA[Enter BB code for video, without brackets]]></phrase>			
+		</phrasetype>	
+	</phrases>
+	<options>
+		<settinggroup name="meow_settings" displayorder="65535">
+			<setting varname="meow_ref_replace" displayorder="10">
+				<datatype>boolean</datatype>
+				<optioncode>yesno</optioncode>
+				<defaultvalue>1</defaultvalue>
+			</setting>
+			<setting varname="meow_ref_encoding" displayorder="20">
+				<datatype>free</datatype>
+				<defaultvalue></defaultvalue>
+			</setting>
+			<setting varname="meow_ref_buffers" displayorder="30">
+				<datatype>integer</datatype>
+				<defaultvalue>10</defaultvalue>
+				<validationcode><![CDATA[return is_numeric($data) && ($data > 0);]]></validationcode>
+			</setting>	
+			<setting varname="meow_pic_detect" displayorder="40">
+				<datatype>boolean</datatype>
+				<optioncode>yesno</optioncode>
+				<defaultvalue>1</defaultvalue>
+			</setting>
+			<setting varname="meow_pic_exts" displayorder="50">
+				<datatype>free</datatype>
+				<defaultvalue>gif jpg jpeg png</defaultvalue>
+			</setting>
+			<setting varname="meow_vid_detect" displayorder="60">
+				<datatype>boolean</datatype>
+				<optioncode>yesno</optioncode>
+				<defaultvalue>1</defaultvalue>
+			</setting>
+			<setting varname="meow_vid_code" displayorder="70">
+				<datatype>free</datatype>
+				<defaultvalue>video</defaultvalue>
+			</setting>				
+		</settinggroup>
+	</options>
+	<helptopics>
+	</helptopics>
+	<cronentries>
+	</cronentries>
+	<faqentries>
+	</faqentries>
+	<navigation>
+	</navigation>
+</product>
