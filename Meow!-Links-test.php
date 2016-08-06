@@ -9,7 +9,7 @@
  * @author   Catlord Meow! <no@grumpy.cat>
  * @license  http://www.gnu.org/copyleft/gpl.html GNU GPL v3
  * @version  1.0
- * @date     2016-08-03
+ * @date     2016-08-06
  * @link     https://github.com/CatlordMeow/Misc
  */
 
@@ -18,9 +18,7 @@ $messagetext = <<<EOT
 [url]https://www.youtube.com/[/url]
 _http://ya.ru/
 [/noparse]
-http://s008.radikal.ru/i304/1607/fd/99e3936bca32.jpg
-_http://php.net/
-_http://php.net:666/
+ https://vk.com/sovserv_2
 EOT;
 
 $skiptaglist = 'url|email|code|php|html|noparse';
@@ -31,14 +29,17 @@ $vbulletin->options['meow_pic_detect'] = true;
 $vbulletin->options['meow_pic_exts'] = 'jpg . gif png';
 $vbulletin->options['meow_vid_code'] = 'video';
 $vbulletin->options['meow_vid_detect'] = true;
-$stylevar['charset'] = 'utf-8';
+$stylevar['charset'] = 'windows-1251';
+
+
 
 /* ====================================
     place your just below this line  */
 
+
 /* place your code just above this line
 ======================================== */
-	
-	print $messagetext;
+
+print $messagetext;
 
 ?>
