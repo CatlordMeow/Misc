@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="cp1251"?>
+
+<language name="Russian (RU)" vbversion="4.2.3" product="meowlinks" type="phrases">
+	<phrasetype name="vBulletin Settings" fieldname="vbsettings">
+		<phrase name="settinggroup_meow_settings" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Catlord Meow!'s Links]]></phrase>
+		<phrase name="setting_meow_ref_replace_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Çàìåíÿòü íàçâàíèå ññûëêè íà çàãîëîâîê ñòðàíèöû]]></phrase>
+		<phrase name="setting_meow_ref_replace_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Åñëè ýòà îïöèÿ âêëþ÷åíà, êàê ðàç, êîãäà ïîëüçîâàòåëü îòïðàâëÿåò ññûëêó áåç êàêîãî-ëèáî ÁÁ êîäà, ôîðóì ñêà÷àåò ñòðàíèöó ïî ññûëêå è ïåðåïèøåò íàçâàíèå ññûëêè íà çàãîëîâîê ñòðàíèöû, åñëè îí åñòü.]]></phrase>
+		<phrase name="setting_meow_ref_encoding_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Ïåðåêðûòü êîäèðîâêó ôîðóìà]]></phrase>
+		<phrase name="setting_meow_ref_encoding_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Ââåäèòå êîäèðîâêó, êîòîðàÿ çàìåíèò âûçîâ vB_Template_Runtime::fetchStyleVar('charset').<br />
+			Îñòàâüòå ïóñòûì, ÷òîáû èñïîëüçîâàòü ðåçóëüòàò âûçîâà fetchStyleVar.]]></phrase>
+		<phrase name="setting_meow_ref_buffers_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Ìàêñèìàëüíîå êîëè÷åñòâî áóôåðîâ]]></phrase>			
+		<phrase name="setting_meow_ref_buffers_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Ìàêñèìàëüíîå êîëè÷åñòâî áóôåðîâ, êàæäûé ðàçìåðîì â 8192 áàéò, êîòîðûå áóäóò èñïîëüçîâàòüñÿ äëÿ ïîëó÷åíèÿ çàãîëîâêîâ ñòðàíèö.<br />
+			Ñëèøêîì ìàëåíüêîå çíà÷åíèå ïîìåøàåò ïðîöåññó çàìåíû íàçâàíèÿ.<br />
+			Ñëèøêîì áîëüøîå çíà÷åíèå ïðèâåä¸ò ê ÷ðåçìåðíîìó ïîòðåáëåíèþ òðàôèêà è çàìåäëèò âàø ñåðâåð.]]></phrase>		
+		<phrase name="setting_meow_pic_detect_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Çàìåíÿòü êîäû äëÿ èçîáðàæåíèé]]></phrase>
+		<phrase name="setting_meow_pic_detect_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Åñëè ýòà îïöèÿ âêëþ÷åíà, âñå âíîâü îòïðàâëÿåìûå ññûëêè, èìåþùèå ðàñøèðåíèÿ èçîáðàæåíèé, áóäóò îá¸ðíóòû â êîä img.]]></phrase>
+		<phrase name="setting_meow_pic_exts_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Ðàñøèðåíèÿ èçîáðàæåíèé]]></phrase>
+		<phrase name="setting_meow_pic_exts_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Ââåäèòå ñïèñîê ðàñøèðåíèé èçîáðàæåíèé, ðàçäåë¸ííûõ ïðîáåëîì.]]></phrase>
+		<phrase name="setting_meow_vid_detect_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Çàìåíÿòü êîäû äëÿ YouTube]]></phrase>
+		<phrase name="setting_meow_vid_detect_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Åñëè ýòà îïöèÿ âêëþ÷åíà, âñå âíîâü îòïðàâëÿåìûå ññûëêè íà âèäåî íà YouTube, áóäóò îá¸ðíóòû â êîä, óêàçàííûé íèæå.]]></phrase>
+		<phrase name="setting_meow_vid_code_title" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Êîä âèäåî]]></phrase>
+		<phrase name="setting_meow_vid_code_desc" date="1409628801" username="Catlord Meow!" version="1.0.0">
+			<![CDATA[Ââåäèòå ÁÁ êîä äëÿ âèäåî, áåç ñêîáîê.]]></phrase>			
+	</phrasetype>	
+</language>
