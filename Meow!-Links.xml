@@ -118,7 +118,7 @@ if (!function_exists('meow_url_to_bbcode')) {
 		// reverse order! important!
 		while ($i > 0) {
 			$i--;
- 		  $s = $http_response_header[$i];
+			$s = $http_response_header[$i];
 			if (!preg_match ('#charset="?([-a-z0-9_]+)#i', $s, $m)) { continue; }
 			$remote_chset = $m[1];
 			break;
@@ -165,11 +165,12 @@ if (!function_exists('meow_url_to_bbcode')) {
 			}
 		}
 
+		var_dump($text);
 		if ($vbulletin->options['meow_vid_detect']) {
-			$youTubeTest = '#((http[s]?)?://(www)?\.youtube\.com/watch\?.*v=.+|' .
-				'(http[s]?)?://youtu\.be/.+)#i';
-			if (preg_match($youTubeTest, $t)) {
-			  $v = $vbulletin->options['meow_vid_code'];
+			$youTubeTest = '#^((www\.)?youtube\.com/watch\?.*v=.+|' .
+				'youtu\.be/.+)$#i';
+			if (preg_match($youTubeTest, $text[4])) {
+				$v = $vbulletin->options['meow_vid_code'];
 				return "[$v]{$t}[/$v]";
 			}
 		}
