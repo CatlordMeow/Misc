@@ -202,7 +202,7 @@ for (i = 0; i < a.length; i++) {
 	e = document.createElement('div');
 	setText(e, sClickToExpand);
 	e.className = 'quoteexpand';
-	m.parentNode.appendChild(e);
+	m.appendChild(e);
 	addClick(e, quoteCutClick);
 }
 }
