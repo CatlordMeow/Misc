@@ -1,6 +1,6 @@
 ﻿// @name vbb-utils
-// @version 1.5
-// @date 29.07.16
+// @version 1.6
+// @date 2016-08-07
 // eslint-disable-next-line
 // @description Helper script for vBulletin 4.2 forums. Bells and whistlers.
 // @author Catlord Meow!, http://sovserv.su/member.php?u=237
@@ -12,7 +12,7 @@
 
 var
 	sClickToExpand = 'Кликните, чтобы развернуть',
-	sShowBigger = 'Изображение уменьшено\n' +
+	sShowBigger = 'Изображение уменьшено.\n' +
 		'Кликните, чтобы показать в полном размере (%s x %s)',
 	sShowSmaller = 'Изображение показано в полном размере.\n' +
 		'Кликните, чтобы уменьшить до нормального размера';
@@ -187,12 +187,8 @@ for (i = 0; i < a.length; i++) {
 
 function quoteCutClick(e) {
 var t = getTarget(e),
- x = t.previousSibling;
-while (x && x.nodeType !== 1) {
-	x = x.previousSibling;
-}
-if (!x) { return; }
-x.className = 'message';
+ x = t.parentNode;
+x.className = 'quote_container';
 t.parentNode.removeChild(t);
 }
 
@@ -201,7 +197,7 @@ var a = document.getElementsByClassName('message'),
 	e, i, m;
 for (i = 0; i < a.length; i++) {
 	m = a[i];
-	if (m.scrollHeight <= 120) { continue; }
+	if (m.scrollHeight <= 150) { continue; }
 	m.className += ' messagecut';
 	e = document.createElement('div');
 	setText(e, sClickToExpand);
