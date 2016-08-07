@@ -165,13 +165,14 @@ if (!function_exists('meow_url_to_bbcode')) {
 			}
 		}
 
-		var_dump($text);
 		if ($vbulletin->options['meow_vid_detect']) {
-			$youTubeTest = '#^((www\.)?youtube\.com/watch\?.*v=.+|' .
-				'youtu\.be/.+)$#i';
-			if (preg_match($youTubeTest, $text[4])) {
+			$youTubeTest = '#^(?:(?:www\.)?youtube\.com/watch\?.*v=' .
+				'|youtu\.be/)([^&]+)&?.*$#i';
+			if (preg_match($youTubeTest, $text[4], $m)) {
 				$v = $vbulletin->options['meow_vid_code'];
-				return "[$v]{$t}[/$v]";
+				/* important: crappy vb video code parser only understands
+				 urls with 'http://www' prefix! */
+				return "[$v]https://www.youtube.com/watch?v={$m[1]}[/$v]";
 			}
 		}
 
