@@ -193,7 +193,7 @@ t.parentNode.removeChild(t);
 }
 
 function injectQuoteExpand() {
-var a = document.getElementsByClassName('message'),
+var a = document.getElementsByClassName('quote_container'),
 	e, i, m;
 for (i = 0; i < a.length; i++) {
 	m = a[i];
