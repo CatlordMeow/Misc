@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<language name="Russian (RU)" vbversion="4.2.3" product="meowlinks" type="phrases">
+	<phrasetype name="vBulletin Settings" fieldname="vbsettings">
+		<phrase name="setting_meow_ref_replace_title" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Заменять название ссылки на заголовок страницы]]></phrase>
+		<phrase name="setting_meow_ref_replace_desc" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Если эта опция включена, как раз, когда пользователь отправляет ссылку без какого-либо ББ кода, форум скачает страницу по ссылке и перепишет название ссылки на заголовок страницы, если он есть.]]></phrase>
+		<phrase name="setting_meow_ref_encoding_title" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Перекрыть кодировку форума]]></phrase>
+		<phrase name="setting_meow_ref_encoding_desc" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Введите кодировку, которая заменит вызов vB_Template_Runtime::fetchStyleVar('charset').<br />
+Оставьте пустым, чтобы использовать результат вызова fetchStyleVar.]]></phrase>
+		<phrase name="setting_meow_ref_buffers_title" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Максимальное количество буферов]]></phrase>			
+		<phrase name="setting_meow_ref_buffers_desc" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Максимальное количество буферов, каждый размером в 8192 байт, которые будут использоваться для получения заголовков страниц.<br />
+Слишком маленькое значение помешает процессу замены названия.<br />
+Слишком большое значение приведёт к чрезмерному потреблению трафика и замедлит ваш сервер.]]></phrase>		
+		<phrase name="setting_meow_pic_detect_title" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Добавлять код для изображений]]></phrase>
+		<phrase name="setting_meow_pic_detect_desc" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Если эта опция включена, все вновь отправляемые ссылки, имеющие расширения изображений, будут обёрнуты в код img.]]></phrase>
+		<phrase name="setting_meow_pic_exts_title" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Расширения изображений]]></phrase>
+		<phrase name="setting_meow_pic_exts_desc" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Введите список расширений изображений, разделённых пробелом.]]></phrase>
+		<phrase name="setting_meow_vid_detect_title" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Добавлять код для YouTube]]></phrase>
+		<phrase name="setting_meow_vid_detect_desc" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Если эта опция включена, все вновь отправляемые ссылки на видео на YouTube, будут обёрнуты в код, указанный ниже.]]></phrase>
+		<phrase name="setting_meow_vid_code_title" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Код видео]]></phrase>
+		<phrase name="setting_meow_vid_code_desc" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Введите ББ код для видео, без скобок.]]></phrase>			
+	</phrasetype>	
+</language>

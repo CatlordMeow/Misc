@@ -233,7 +233,7 @@ if (!function_exists('meow_url_to_bbcode')) {
 	</plugins>
 	<phrases>
 		<phrasetype name="vBulletin Settings" fieldname="vbsettings">
-			<phrase name="settinggroup_meow_settings" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Catlord Meow!'s Links]]></phrase>
+			<phrase name="settinggroup_meow_settings" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Meow! Links]]></phrase>
 			<phrase name="setting_meow_ref_replace_title" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Replace url titles with titles of referenced pages]]></phrase>
 			<phrase name="setting_meow_ref_replace_desc" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[If this option is on, each time a user posted a url without any BB codes, forum will download page by the link and rewrite url title with page title, if any.]]></phrase>
 			<phrase name="setting_meow_ref_encoding_title" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Override forum's encoding]]></phrase>

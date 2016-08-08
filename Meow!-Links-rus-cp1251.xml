@@ -2,7 +2,6 @@
 
 <language name="Russian (RU)" vbversion="4.2.3" product="meowlinks" type="phrases">
 	<phrasetype name="vBulletin Settings" fieldname="vbsettings">
-		<phrase name="settinggroup_meow_settings" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Catlord Meow!'s Links]]></phrase>
 		<phrase name="setting_meow_ref_replace_title" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Заменять название ссылки на заголовок страницы]]></phrase>
 		<phrase name="setting_meow_ref_replace_desc" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Если эта опция включена, как раз, когда пользователь отправляет ссылку без какого-либо ББ кода, форум скачает страницу по ссылке и перепишет название ссылки на заголовок страницы, если он есть.]]></phrase>
 		<phrase name="setting_meow_ref_encoding_title" date="1409628801" username="Catlord Meow!" version="1.0.0"><![CDATA[Перекрыть кодировку форума]]></phrase>
