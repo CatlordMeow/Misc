@@ -1,9 +1,9 @@
 // @name jslints-switches
 // @version 1.1
-// @date 29.07.16
+// @date 20016-08-09
 // eslint-disable-next-line
 // @description Switches for JS lints I use
-// @author Catlord Meow!, http://sovserv.su/member.php?u=237
+// @author Catlord Meow!, https://github.com/CatlordMeow/
 // @license GNU GPL v3; http://www.gnu.org/copyleft/gpl.html
 
 /*
