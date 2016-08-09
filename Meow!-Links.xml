@@ -4,7 +4,7 @@
 	<title>Meow! Links</title>
 	<description>Catlord Meow!'s URL tools. Replace URL title with page title, auto detect pictures, auto detect videos.</description>
 	<version>1.0</version>
-	<url>http://sovserv.su/member.php?u=237</url>
+	<url>https://github.com/CatlordMeow/</url>
 	<versioncheckurl />
 	<dependencies>
 		<dependency dependencytype="vbulletin" minversion="3.6.0" maxversion="4.9.9" />
@@ -29,7 +29,7 @@
  *            Credits:
  * Catlord Meow!, exportforce, Jafo232, kerk, vBulletin team.
  *
- * Author: Catlord Meow!, http://sovserv.su/member.php?u=237
+ * Author: Catlord Meow!, https://github.com/CatlordMeow/
  *
  * Author of "Title Tag Fetcher" 1.5c: exportforce,
  * http://www.vbulletin.org/forum/member.php?u=206080
@@ -51,7 +51,7 @@
  * PHP version 5
  *
  * @category vBulletin
- * @package  Meow!_Links
+ * @package  Meow!-Links
  * @author   Catlord Meow! <no@grumpy.cat>
  * @license  http://www.gnu.org/copyleft/gpl.html GNU GPL v3
  * @version  1.0
@@ -81,7 +81,8 @@ if (!function_exists('meow_url_to_bbcode')) {
 		$page = '';
 		$r = $vbulletin->options['meow_ref_buffers'];
 		$x = 0;
-		if ($fp = @fopen($text[2] . $text[4], 'r', false, $context)) {
+		$fp = @fopen($text[2] . $text[4], 'r', false, $context)
+		if ($fp) {
 			while (!feof($fp) AND ($x < $r)) {
 				$page .= fread($fp, 8192);
 				$x++;
