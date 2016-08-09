@@ -45,7 +45,7 @@
  *
  * Changelog:
  *
- * 1.0 2016-08-09
+ * 1.0 2016-08-10
  * First public release
  *
  * PHP version 5
@@ -55,7 +55,7 @@
  * @author   Catlord Meow! <no@grumpy.cat>
  * @license  http://www.gnu.org/copyleft/gpl.html GNU GPL v3
  * @version  1.0
- * @date     2016-08-09
+ * @date     2016-08-10
  * @link     https://github.com/CatlordMeow/Misc
  */
  
@@ -194,6 +194,19 @@ if (!function_exists('meow_url_to_bbcode')) {
 			$taglist = '\[b|\[i|\[u|\[left|\[center|\[right|\[indent|\[quote|\[' .
 				'highlight|\[\*|\[/b|\[/i|\[/u|\[/left|\[/center|\[/right|\[/' .
 				'indent|\[/quote|\[/highlight';
+			foreach ($vbulletin->bbcodecache AS $customtag)	{
+				if (!(intval($customtag['options']) & 
+					vbulletin->bf_misc['bbcodeoptions']['disable_urlconversion'])) {
+					$customtag_quoted = preg_quote($customtag['bbcodetag'], '#');
+					$taglist .= '|\[' . $customtag_quoted . '|\[/' . $customtag_quoted;
+				}
+			}
+			$urlSearchArray = $urlReplaceArray = $emailSearchArray =
+				$emailReplaceArray = array();
+
+			($hook = vBulletinHook::fetch_hook('url_to_bbcode_callback'))
+				? eval($hook) : false;
+				
 			$urlSearchArray = array(
 				'#(^|(?<=[^_a-z0-9-=\]"\'/@]|(?<=' . $taglist .
 				')\]))((https?|ftp|gopher|news|telnet)://|www\.)((\[(?!/)|[^\s[^$`"' .
