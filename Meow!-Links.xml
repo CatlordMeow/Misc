@@ -60,9 +60,9 @@
  */
  
 if (!function_exists('meow_url_to_bbcode')) {
+
 	function meow_dl_title($text) {
 		global $vbulletin;
-
 		if (!$vbulletin->options['meow_ref_replace']) { return null; }
 
 		$options = array(
@@ -78,17 +78,17 @@ if (!function_exists('meow_url_to_bbcode')) {
 			$text[4] = $text[2] . $text[4];
 			$text[2] = 'http://';
 		}
+		$fp = @fopen($text[2] . $text[4], 'r', false, $context);
+		if (!$fp) { return null; }
+		
 		$page = '';
 		$r = $vbulletin->options['meow_ref_buffers'];
-		$x = 0;
-		$fp = @fopen($text[2] . $text[4], 'r', false, $context);
-		if ($fp) {
-			while (!feof($fp) AND ($x < $r)) {
-				$page .= fread($fp, 8192);
-				$x++;
-			}
-			@fclose($fp);
+		$x = 0;		
+		while (!feof($fp) AND ($x < $r)) {
+			$page .= fread($fp, 8192);
+			$x++;
 		}
+		@fclose($fp);
 		if ($page == '' or !preg_match('#<title>(.*)</title>#is', $page, $m) or
 			!$m[1]) {
 			return null;
