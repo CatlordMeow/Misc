@@ -81,7 +81,7 @@ if (!function_exists('meow_url_to_bbcode')) {
 		$page = '';
 		$r = $vbulletin->options['meow_ref_buffers'];
 		$x = 0;
-		$fp = @fopen($text[2] . $text[4], 'r', false, $context)
+		$fp = @fopen($text[2] . $text[4], 'r', false, $context);
 		if ($fp) {
 			while (!feof($fp) AND ($x < $r)) {
 				$page .= fread($fp, 8192);
