@@ -3,7 +3,7 @@
 <product productid="meowlinks" active="1">
 	<title>Meow! Links</title>
 	<description>Catlord Meow!'s URL tools. Replace URL title with page title, auto detect pictures, auto detect videos.</description>
-	<version>1.0</version>
+	<version>1.1</version>
 	<url>https://github.com/CatlordMeow/</url>
 	<versioncheckurl />
 	<dependencies>
@@ -44,6 +44,8 @@
  * http://vbsupport.org/forum/showthread.php?t=50335
  *
  * Changelog:
+ * 1.1 2016-08-10
+ * Fixed: Incorrect parsing titles
  *
  * 1.0 2016-08-10
  * First public release
@@ -54,7 +56,7 @@
  * @package  Meow!-Links
  * @author   Catlord Meow! <no@grumpy.cat>
  * @license  http://www.gnu.org/copyleft/gpl.html GNU GPL v3
- * @version  1.0
+ * @version  1.1
  * @date     2016-08-10
  * @link     https://github.com/CatlordMeow/Misc
  */
@@ -89,7 +91,7 @@ if (!function_exists('meow_url_to_bbcode')) {
 			$x++;
 		}
 		@fclose($fp);
-		if ($page == '' or !preg_match('#<title>(.*)</title>#is', $page, $m) or
+		if ($page == '' or !preg_match('#<title>(.*)</title>#isU', $page, $m) or
 			!$m[1]) {
 			return null;
 		}
@@ -172,7 +174,7 @@ if (!function_exists('meow_url_to_bbcode')) {
 			if (preg_match($youTubeTest, $text[4], $m)) {
 				$v = $vbulletin->options['meow_vid_code'];
 				/* important: crappy vb video code parser only understands
-				 urls with 'http://www' prefix! */
+				 urls with 'https://www' prefix! */
 				return "[$v]https://www.youtube.com/watch?v={$m[1]}[/$v]";
 			}
 		}
@@ -204,8 +206,8 @@ if (!function_exists('meow_url_to_bbcode')) {
 			}
 			$urlSearchArray = $emailSearchArray =	$emailReplaceArray = array();
 
-			($hook = vBulletinHook::fetch_hook('url_to_bbcode_callback'))
-				? eval($hook) : false;
+			$hook = vBulletinHook::fetch_hook('url_to_bbcode_callback');
+			if ($hook) { eval($hook); }
 				
 			$urlSearchArray = array(
 				'#(^|(?<=[^_a-z0-9-=\]"\'/@]|(?<=' . $taglist .
