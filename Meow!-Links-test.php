@@ -8,23 +8,18 @@
  * @package  Meow!_Links
  * @author   Catlord Meow! <no@grumpy.cat>
  * @license  http://www.gnu.org/copyleft/gpl.html GNU GPL v3
- * @version  1.0
- * @date     2016-08-10
+ * @version  1.1
+ * @date     2016-08-14
  * @link     https://github.com/CatlordMeow/Misc
  */
 
-$messagetext = <<<EOT
+$messagetext = '
 [noparse]
 [url]https://www.youtube.com/[/url]
 _http://ya.ru/
 [/noparse]
-
-http://i045.radikal.ru/1607/8f/57aa834c69de.jpg
-[img]http://i045.radikal.ru/1607/8f/57aa834c69de.jpg[/img]
-[img] http://i045.radikal.ru/1607/8f/57aa834c69de.jpg[/img]
-[img] http://i045.radikal.ru/1607/8f/57aa834c69de.jpg [/img]
-gg
-EOT;
+http://ya.ru/
+http://i045.radikal.ru/1607/8f/57aa834c69de.jpg';
 
 $skiptaglist = 'url|email|code|php|html|noparse';
 $vbulletin->options['meow_ref_buffers'] = 10;
@@ -42,14 +37,8 @@ class vBulletinHook {
 	public static function fetch_hookusage() { return array(); }
 }
 
-
-/* ====================================
-    place your just below this line  */
-
-
-		
-/* place your code just above this line
-======================================== */
+$x = simplexml_load_file('Meow!-Links.xml', null, LIBXML_NOCDATA);
+eval($x->plugins->plugin->phpcode);
 
 print $messagetext;
 
